@@ -11,20 +11,28 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.andres.mercadolibre.R
+import com.andres.mercadolibre.ui.views.main.MainViewModel
 import com.andres.mercadolibre.util.Constants
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun ListCategories(
-    context: Context,
+fun itemCategories(
     index: Int,
     category: String,
     onClick: (Boolean) -> Unit,
+    product: (String) -> Unit,
+    mainViewModel: MainViewModel,
+    keyboardController: SoftwareKeyboardController,
+    clearFocus: (Boolean) -> Unit,
+    showText: (Boolean) -> Unit,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -34,11 +42,11 @@ fun ListCategories(
             .fillMaxWidth()
             .clickable {
                 onClick(true)
-                Toast
-                    .makeText(context,
-                        context.getText(R.string.search_products),
-                        Toast.LENGTH_SHORT)
-                    .show()
+                product(category)
+                mainViewModel.getBySearch(category)
+                keyboardController.hide()
+                clearFocus(false)
+                showText(true)
             }
     ) {
         Card(

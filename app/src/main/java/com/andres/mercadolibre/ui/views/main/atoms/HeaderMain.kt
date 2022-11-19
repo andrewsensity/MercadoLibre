@@ -14,12 +14,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -39,9 +40,11 @@ fun HeaderMain(
     showIcon: Boolean = false,
     onClick: Boolean,
     context: Context,
-    clearFocus: (Boolean) -> Unit
+    clearFocus: (Boolean) -> Unit,
+    emptySearch: (String) -> Unit,
+    searchFromCategories: String,
 ) {
-    val (search, onChangeSearch) = rememberSaveable { mutableStateOf(EMPTY) }
+    var search by rememberSaveable { mutableStateOf(EMPTY) }
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -55,7 +58,8 @@ fun HeaderMain(
             if (showIcon) {
                 IconButton(
                     onClick = {
-                        onChangeSearch(EMPTY)
+                        search = EMPTY
+                        emptySearch(EMPTY)
                         showText(false)
                     },
                     modifier = Modifier.offset(x = 4.3.dp)
@@ -68,8 +72,11 @@ fun HeaderMain(
                 }
             }
             CustomTextField(
-                search = search,
-                onChangeSearch = onChangeSearch,
+                search = searchFromCategories.ifEmpty { search },
+                onChangeSearch = {
+                    search = it
+                    emptySearch(EMPTY)
+                },
                 modifier = Modifier
                     .padding(
                         start = if (showIcon) 0.dp else 12.dp,
@@ -85,7 +92,9 @@ fun HeaderMain(
                                 clearFocus(false)
                                 showText(true)
                             } else {
-                                Toast.makeText(context, context.getText(R.string.enter_product), Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context,
+                                    context.getText(R.string.enter_product),
+                                    Toast.LENGTH_SHORT).show()
                             }
                         },
                         modifier = Modifier

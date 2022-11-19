@@ -22,7 +22,7 @@ import com.andres.mercadolibre.ui.component.CustomLoading
 import com.andres.mercadolibre.ui.component.CustomSnackBarNetwork
 import com.andres.mercadolibre.ui.theme.Yellow
 import com.andres.mercadolibre.ui.views.main.atoms.HeaderMain
-import com.andres.mercadolibre.ui.views.main.atoms.ListCategories
+import com.andres.mercadolibre.ui.views.main.atoms.itemCategories
 import com.andres.mercadolibre.ui.views.main.atoms.ListContent
 import com.andres.mercadolibre.util.ConnectionState
 import com.andres.mercadolibre.util.Constants.EMPTY
@@ -39,6 +39,7 @@ fun MainScreen(
     val context = LocalContext.current
     val categories = mutableListOf<String>()
     var onClick by remember { mutableStateOf(false) }
+    var searchFromCategories by remember { mutableStateOf("") }
     val connection by connectivityState()
     val isConnected = connection != ConnectionState.Available
     mainViewModel.categories.categories.forEach { categories.add(it.name) }
@@ -56,7 +57,9 @@ fun MainScreen(
                         showIcon = showText,
                         onClick = onClick,
                         context = context,
-                        clearFocus = { onClick = it }
+                        clearFocus = { onClick = it },
+                        searchFromCategories = searchFromCategories,
+                        emptySearch = { searchFromCategories = it }
                     )
                 }
             }
@@ -90,12 +93,18 @@ fun MainScreen(
                     contentPadding = PaddingValues(vertical = 10.dp)
                 ) {
                     itemsIndexed(categories) { index, category ->
-                        ListCategories(
-                            context = context,
-                            index = index,
-                            category = category,
-                            onClick = { onClick = it }
-                        )
+                        keyboardController?.let { keyboard ->
+                            itemCategories(
+                                index = index,
+                                category = category,
+                                onClick = { onClick = it },
+                                product = { searchFromCategories = it },
+                                mainViewModel = mainViewModel,
+                                keyboardController = keyboard,
+                                clearFocus = { onClick = it },
+                                showText = { show -> showText = show }
+                            )
+                        }
                     }
                 }
             }

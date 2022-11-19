@@ -49,7 +49,7 @@ fun CustomTextField(
     search: String,
     item: InputField,
     context: Context,
-    clearFocus: (Boolean) -> Unit
+    clearFocus: (Boolean) -> Unit,
 ) {
     val requester = FocusRequester()
     SideEffect { if (item.isFocused) { requester.requestFocus() } }
@@ -76,7 +76,7 @@ fun CustomTextField(
             ) {
                 Box(modifier = Modifier.padding(vertical = 8.dp, horizontal = 12.dp)) {
                     if (search.isEmpty()) Text(
-                        placeholderText,
+                        text = placeholderText,
                         style = LocalTextStyle.current.copy(
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
                             fontSize = fontSize
