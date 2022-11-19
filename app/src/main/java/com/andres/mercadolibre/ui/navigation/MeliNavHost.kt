@@ -10,7 +10,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 @Composable
 fun MeliNavHost(
     navController: NavHostController = rememberAnimatedNavController(),
-    startDestination: String = Screen.MainScreen.route,
+    startDestination: String = Screen.SplashScreen.route,
 ) {
     AnimatedNavHost(
         navController = navController,

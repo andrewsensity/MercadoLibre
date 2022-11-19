@@ -6,9 +6,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.andres.mercadolibre.R
 import com.andres.mercadolibre.domain.model.detail.DetailResponse
 import com.andres.mercadolibre.domain.model.search.Result
 
@@ -20,7 +22,7 @@ fun Header(
 ) {
     Spacer(modifier = Modifier.padding(top = 6.dp))
     Text(
-        text = "$itemCondition | ${detail.sold_quantity} vendidos",
+        text = stringResource(id = R.string.condition_quantity_sold, itemCondition,detail.sold_quantity),
         fontSize = 12.sp,
         fontWeight = FontWeight.Light,
         modifier = Modifier,

@@ -63,39 +63,3 @@ object Constants {
         Icons.Default.AltRoute
     )
 }
-
-/*
-* val listCategories = listOf(
-        Categories(Icons.Default.SettingsSuggest, title = "Accesorios vehiculos"),
-        Categories(Icons.Default.Grass, title = "Agro"),
-        Categories(Icons.Default.LunchDining, title = "Alimentos y bebidas"),
-        Categories(Icons.Default.Pets, title = "Animales y mascotas"),
-        Categories(Icons.Default.CollectionsBookmark, title = "Antiguedades y colecciones"),
-        Categories(Icons.Default.Palette, title = "Arte papeleria y merceria"),
-        Categories(Icons.Default.Face6, title = "Bebes"),
-        Categories(Icons.Default.Brush, title = "Belleza y cuidado personal"),
-        Categories(Icons.Default.LocalActivity, title = "Boletos para espectaculos"),
-        Categories(Icons.Default.CameraAlt, title = ""),
-        Categories(Icons.Default.TwoWheeler, title = ""),
-        Categories(Icons.Default.PhoneAndroid, title = ""),
-        Categories(Icons.Default.Computer, title = ""),
-        Categories(Icons.Default.VideogameAsset, title = ""),
-        Categories(Icons.Default.Engineering, title = ""),
-        Categories(Icons.Default.SportsSoccer, title = ""),
-        Categories(Icons.Default.Kitchen, title = ""),
-        Categories(Icons.Default.Cable, title = ""),
-        Categories(Icons.Default.Construction, title = ""),
-        Categories(Icons.Default.Bed, title = ""),
-        Categories(Icons.Default.Factory, title = ""),
-        Categories(Icons.Default.RealEstateAgent, title = ""),
-        Categories(Icons.Default.Radio, title = ""),
-        Categories(Icons.Default.SmartToy, title = ""),
-        Categories(Icons.Default.AutoStories, title = ""),
-        Categories(Icons.Default.MusicNote, title = ""),
-        Categories(Icons.Default.Celebration, title = ""),
-        Categories(Icons.Default.Watch, title = ""),
-        Categories(Icons.Default.Checkroom, title = ""),
-        Categories(Icons.Default.MonitorHeart, title = ""),
-        Categories(Icons.Default.DesignServices, title = ""),
-        Categories(Icons.Default.AltRoute, title = "")
-    )*/

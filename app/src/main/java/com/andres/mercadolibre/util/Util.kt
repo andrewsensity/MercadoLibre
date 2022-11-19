@@ -72,7 +72,7 @@ object Util {
         }
     }
 
-    fun networkCallback(callback: (ConnectionState) -> Unit): ConnectivityManager.NetworkCallback {
+    private fun networkCallback(callback: (ConnectionState) -> Unit): ConnectivityManager.NetworkCallback {
         return object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
                 callback(ConnectionState.Available)

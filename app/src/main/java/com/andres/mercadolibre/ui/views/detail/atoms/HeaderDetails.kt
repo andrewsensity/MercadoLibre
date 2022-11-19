@@ -1,6 +1,8 @@
 package com.andres.mercadolibre.ui.views.detail.atoms
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.Icon
@@ -14,17 +16,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.andres.mercadolibre.R
+import com.andres.mercadolibre.ui.theme.Yellow
 import com.andres.mercadolibre.util.Constants.EMPTY
 
 @Composable
-fun HeaderDetails() {
+fun HeaderDetails(quantity: String) {
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(8.dp))
-        Row() {
+        Row {
             Row(
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically,
@@ -45,11 +49,32 @@ fun HeaderDetails() {
                     )
                 }
                 IconButton(onClick = { }) {
-                    Icon(
-                        imageVector = Icons.Outlined.ShoppingCart,
-                        contentDescription = EMPTY,
-                        tint = Color.Black
-                    )
+                    Box(contentAlignment = Alignment.TopCenter) {
+                        val icon = if (quantity.isNotEmpty()) Icons.Outlined.AddShoppingCart
+                        else Icons.Outlined.ShoppingCart
+                        Icon(
+                            imageVector = icon,
+                            contentDescription = EMPTY,
+                            tint = Color.Black,
+                            modifier = Modifier.offset(y = 3.dp)
+                        )
+                        if (quantity.isNotEmpty()) {
+                            Box(
+                                modifier = Modifier
+                                    .background(Yellow, CircleShape)
+                                    .size(12.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                val value = if (quantity.toInt() > 9) "${quantity.first()}+"
+                                else quantity
+                                Text(
+                                    text = value,
+                                    fontSize = 8.sp,
+                                    color = Color.Black
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }

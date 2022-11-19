@@ -1,14 +1,9 @@
 package com.andres.mercadolibre.ui.views.main.atoms
 
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.Divider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -18,7 +13,7 @@ import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.andres.mercadolibre.R
+import com.andres.mercadolibre.ui.theme.Yellow
 import com.andres.mercadolibre.ui.views.main.MainViewModel
 import com.andres.mercadolibre.util.Constants
 
@@ -53,14 +48,18 @@ fun itemCategories(
             modifier = Modifier
                 .padding(end = 12.dp)
                 .size(50.dp),
-            shape = CircleShape
+            shape = CircleShape,
+            colors = CardDefaults.cardColors(
+                containerColor = Yellow
+            )
         ) {
             Icon(
                 imageVector = Constants.listCategories[index],
                 contentDescription = Constants.EMPTY,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(12.dp)
+                    .padding(12.dp),
+                tint = Color.Black.copy(alpha = 0.8f)
             )
         }
         Text(

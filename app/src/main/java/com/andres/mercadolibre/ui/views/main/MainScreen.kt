@@ -22,8 +22,8 @@ import com.andres.mercadolibre.ui.component.CustomLoading
 import com.andres.mercadolibre.ui.component.CustomSnackBarNetwork
 import com.andres.mercadolibre.ui.theme.Yellow
 import com.andres.mercadolibre.ui.views.main.atoms.HeaderMain
-import com.andres.mercadolibre.ui.views.main.atoms.itemCategories
 import com.andres.mercadolibre.ui.views.main.atoms.ListContent
+import com.andres.mercadolibre.ui.views.main.atoms.itemCategories
 import com.andres.mercadolibre.util.ConnectionState
 import com.andres.mercadolibre.util.Constants.EMPTY
 import com.andres.mercadolibre.util.connectivityState
@@ -47,22 +47,23 @@ fun MainScreen(
         topBar = {
             CustomAppBar(
                 navController = navController,
-                contentDescriptionTopBar = EMPTY
-            ) {
-                keyboardController?.let { keyboardController ->
-                    HeaderMain(
-                        mainViewModel = mainViewModel,
-                        showText = { show -> showText = show },
-                        keyboardController = keyboardController,
-                        showIcon = showText,
-                        onClick = onClick,
-                        context = context,
-                        clearFocus = { onClick = it },
-                        searchFromCategories = searchFromCategories,
-                        emptySearch = { searchFromCategories = it }
-                    )
+                contentDescriptionTopBar = EMPTY,
+                content = {
+                    keyboardController?.let { keyboardController ->
+                        HeaderMain(
+                            mainViewModel = mainViewModel,
+                            showText = { show -> showText = show },
+                            keyboardController = keyboardController,
+                            showIcon = showText,
+                            onClick = onClick,
+                            context = context,
+                            clearFocus = { onClick = it },
+                            searchFromCategories = searchFromCategories,
+                            emptySearch = { searchFromCategories = it }
+                        )
+                    }
                 }
-            }
+            )
         },
         contentColor = Yellow,
     ) {
@@ -82,7 +83,7 @@ fun MainScreen(
                             context = context,
                             products = products,
                             index = index,
-                            showText = { showText = it },
+                            showText = { show -> showText = show },
                             navController = navController
                         )
                     }
@@ -97,11 +98,11 @@ fun MainScreen(
                             itemCategories(
                                 index = index,
                                 category = category,
-                                onClick = { onClick = it },
-                                product = { searchFromCategories = it },
+                                onClick = { click -> onClick = click },
+                                product = { product -> searchFromCategories = product },
                                 mainViewModel = mainViewModel,
                                 keyboardController = keyboard,
-                                clearFocus = { onClick = it },
+                                clearFocus = { clear -> onClick = clear },
                                 showText = { show -> showText = show }
                             )
                         }

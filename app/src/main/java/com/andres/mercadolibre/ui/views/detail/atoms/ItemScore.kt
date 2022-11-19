@@ -2,33 +2,29 @@ package com.andres.mercadolibre.ui.views.detail.atoms
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.andres.mercadolibre.util.Constants
+import com.andres.mercadolibre.util.Constants.EMPTY
 
 @Composable
 fun ItemScore(
     isIcon: Boolean,
     icon: ImageVector,
     description: String,
-    title: String = "",
+    title: String = EMPTY,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         if (isIcon) {
-            Icon(imageVector = icon, contentDescription = Constants.EMPTY, tint = Color.Black)
+            Icon(imageVector = icon, contentDescription = EMPTY, tint = Color.Black)
         } else {
             Text(text = title, color = Color.Black, fontSize = 20.sp)
         }

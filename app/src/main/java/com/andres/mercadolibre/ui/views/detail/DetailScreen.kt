@@ -1,13 +1,15 @@
 package com.andres.mercadolibre.ui.views.detail
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -18,6 +20,7 @@ import com.andres.mercadolibre.domain.model.search.Result
 import com.andres.mercadolibre.ui.component.CustomAppBar
 import com.andres.mercadolibre.ui.component.CustomLoading
 import com.andres.mercadolibre.ui.component.CustomSnackBarNetwork
+import com.andres.mercadolibre.ui.component.rememberModalBottomSheet
 import com.andres.mercadolibre.ui.theme.Yellow
 import com.andres.mercadolibre.ui.views.detail.atoms.*
 import com.andres.mercadolibre.util.ConnectionState
@@ -27,7 +30,7 @@ import com.andres.mercadolibre.util.connectivityState
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalPagerApi::class, ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun DetailScreen(
     id: String,
@@ -48,46 +51,77 @@ fun DetailScreen(
     val pagerState = rememberPagerState(initialPage = 0)
     var itemCondition = ""
     val pages = detailViewModel.lengthList
+    val confirmStateChange by remember { mutableStateOf(true) }
+    var quantity by remember { mutableStateOf(EMPTY) }
+    var cartNumber by remember { mutableStateOf(EMPTY) }
+    val sheetState = rememberModalBottomSheet(confirmStateChange = { confirmStateChange })
+    val scope = rememberCoroutineScope()
     detail.pictures.forEach { picture ->
         pictures.add(picture.url)
     }
     detail.attributes.forEach {
         if (it.id == ITEM_CONDITION) itemCondition = it.value_name
     }
-    Scaffold(
-        topBar = {
-            CustomAppBar(
-                navController = navController,
-                contentDescriptionTopBar = EMPTY
-            ) { HeaderDetails() }
+    var typeModalBottomSheet: BottomSheetContent by remember {
+        mutableStateOf(BottomSheetContent.SelectQuantity)
+    }
+    ModalBottomSheetLayout(
+        sheetState = sheetState,
+        sheetContent = {
+            ModalContent(
+                quantity = { quantity = it },
+                sheetState = sheetState,
+                scope = scope,
+                modalBottomSheetState = typeModalBottomSheet,
+                typeModal = { typeModalBottomSheet = it },
+                initialQuantity = detail.initial_quantity
+            )
         },
-        contentColor = Yellow,
+        sheetShape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .padding(it)
-                .padding(15.dp),
+        Scaffold(
+            topBar = {
+                CustomAppBar(
+                    navController = navController,
+                    contentDescriptionTopBar = EMPTY,
+                ) {
+                    HeaderDetails(quantity = cartNumber)
+                }
+            },
+            contentColor = Yellow,
         ) {
-            Header(
-                itemCondition = itemCondition,
-                detail = detail,
-                result = result
-            )
-            Carrousel(
-                pagerState = pagerState,
-                pages = pages,
-                pictures = pictures,
-                detailViewModel = detailViewModel
-            )
-            PricesShipping(result = result)
-            Shipping()
-            AvailableStock()
-            SellerInfo(
-                location = detail.seller_address,
-                detail = detail
-            )
-            Description(description = description)
+            Column(
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
+                    .padding(it)
+                    .padding(15.dp),
+            ) {
+                Header(
+                    itemCondition = itemCondition,
+                    detail = detail,
+                    result = result
+                )
+                Carrousel(
+                    pagerState = pagerState,
+                    pages = pages,
+                    pictures = pictures,
+                    detailViewModel = detailViewModel
+                )
+                PricesShipping(result = result)
+                Shipping()
+                AvailableStock(
+                    context = context,
+                    sheetState = sheetState,
+                    quantity = quantity,
+                    cart = { cart -> cartNumber = cart },
+                    availableQuantity = detail.initial_quantity
+                )
+                SellerInfo(
+                    location = detail.seller_address,
+                    detail = detail
+                )
+                Description(description = description)
+            }
         }
     }
     CustomLoading(context, detailViewModel.isLoading)

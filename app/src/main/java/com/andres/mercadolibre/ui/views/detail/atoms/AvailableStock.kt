@@ -1,7 +1,12 @@
 package com.andres.mercadolibre.ui.views.detail.atoms
 
+import android.content.Context
+import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowRight
 import androidx.compose.material3.Button
@@ -9,6 +14,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,9 +28,18 @@ import androidx.compose.ui.unit.sp
 import com.andres.mercadolibre.R
 import com.andres.mercadolibre.ui.theme.Blue50
 import com.andres.mercadolibre.util.Constants
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun AvailableStock() {
+fun AvailableStock(
+    context: Context,
+    sheetState: ModalBottomSheetState,
+    quantity: String,
+    cart: (String) -> Unit,
+    availableQuantity: Int,
+) {
+    val scope = rememberCoroutineScope()
     Text(
         text = stringResource(R.string.available_stock),
         fontSize = 16.sp,
@@ -43,7 +58,9 @@ fun AvailableStock() {
         onClick = { }
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { scope.launch { sheetState.show() } },
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -51,10 +68,10 @@ fun AvailableStock() {
                 text = buildAnnotatedString {
                     append(stringResource(R.string.quantity))
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                        append(stringResource(R.string.number_quantity))
+                        append(if (quantity.isEmpty()) "1" else " ${quantity.toInt() + 1}")
                     }
                     withStyle(style = SpanStyle(color = Color.Gray.copy(alpha = 0.5f))) {
-                        append(stringResource(R.string.number_available))
+                        append(stringResource(R.string.number_available, availableQuantity))
                     }
                 },
                 color = Color.Black
@@ -74,7 +91,10 @@ fun AvailableStock() {
             .fillMaxWidth()
             .height(45.dp),
         shape = RoundedCornerShape(10.dp),
-        onClick = { }
+        onClick = {
+            Toast.makeText(context, context.getText(R.string.ready_to_shop), Toast.LENGTH_SHORT)
+                .show()
+        }
     ) {
         Text(text = stringResource(R.string.shop_now), color = Color.White)
     }
@@ -87,7 +107,10 @@ fun AvailableStock() {
             .fillMaxWidth()
             .height(45.dp),
         shape = RoundedCornerShape(10.dp),
-        onClick = { }
+        onClick = {
+            if (quantity.isNotEmpty()) cart((quantity.toInt() + 1).toString())
+            else cart(context.getText(R.string.default_value).toString())
+        }
     ) {
         Text(text = stringResource(R.string.add_cart), color = Blue50)
     }

@@ -2,7 +2,6 @@ package com.andres.mercadolibre.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -23,7 +22,7 @@ fun CustomAppBar(
         CustomTopAppBar(
             navController = navController,
             changeAppearance = true,
-            contentDescription = contentDescriptionTopBar
+            contentDescription = contentDescriptionTopBar,
         )
         content()
     }

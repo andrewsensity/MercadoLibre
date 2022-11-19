@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.andres.mercadolibre.R
 import com.andres.mercadolibre.ui.theme.Gray
@@ -33,7 +33,7 @@ fun Carrousel(
     pagerState: PagerState,
     pages: Int,
     pictures: MutableList<String>,
-    detailViewModel: DetailViewModel
+    detailViewModel: DetailViewModel,
 ) {
     val context = LocalContext.current
     val placeholderImage = R.drawable.ic_default_avatar
@@ -56,11 +56,13 @@ fun Carrousel(
                 modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
-                AsyncImage(
+                SubcomposeAsyncImage(
                     model = imageRequest,
                     contentDescription = Constants.EMPTY,
                     modifier = Modifier.size(400.dp),
-                    contentScale = ContentScale.Fit
+                    contentScale = ContentScale.Fit,
+                    loading = { R.drawable.loading_gif }
+
                 )
             }
         }

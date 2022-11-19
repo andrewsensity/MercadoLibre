@@ -20,10 +20,9 @@
     <string name="profit_meli_points">Beneficio Mercado Puntos</string>
     <string name="available_stock">Stock disponible</string>
     <string name="quantity">\Cantidad: \</string>
-    <string name="number_available">\   (34 disponibles)\</string>
+    <string name="number_available">\   (%s disponibles)\</string>
     <string name="shop_now">Comprar ahora</string>
     <string name="add_cart">Agregar al carrito</string>
-    <string name="number_quantity">1</string>
     <string name="seller_info">Información sobre el vendedor</string>
     <string name="location">Ubicación</string>
     <string name="level">MercadoLider Platinum</string>
@@ -37,4 +36,15 @@
     <string name="enter_product">Ingresa algún producto</string>
     <string name="connection_title">¿Tienes problemas con tu conexión a internet?</string>
     <string name="connection_description">Revisa tu conexión a internet e ingresa nuevamente.</string>
+    <string name="ready_to_shop">Estas listo para comprar</string>
+    <string name="choose_quantity">Elige cantidad</string>
+    <string name="available">%s disponibles</string>
+    <string name="apply">Aplicar</string>
+    <string name="unity">unidad</string>
+    <string name="unities">unidades</string>
+    <string name="more_than_unities">Mas de %s unidades</string>
+    <string name="condition_quantity_sold">%s | %s vendidos</string>
+    <string name="enter_quantity">Ingresar cantidad</string>
+    <string name="without_stock">Sin stock</string>
+    <string name="default_value">1</string>
 </resources>

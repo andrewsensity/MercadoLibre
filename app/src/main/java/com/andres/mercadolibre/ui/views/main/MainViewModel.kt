@@ -1,15 +1,15 @@
 package com.andres.mercadolibre.ui.views.main
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.andres.mercadolibre.domain.model.detail.DetailResponse
 import com.andres.mercadolibre.domain.model.categories.CategoriesResponse
-import com.andres.mercadolibre.domain.model.description.DescriptionResponse
 import com.andres.mercadolibre.domain.model.search.SearchResponse
 import com.andres.mercadolibre.domain.use_case.MeliUseCases
+import com.andres.mercadolibre.util.Constants.EMPTY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -37,14 +37,10 @@ class MainViewModel @Inject constructor(
                 .onSuccess { searchResponse ->
                     isLoading = false
                     search = searchResponse
-                    val result = searchResponse.results
-                    val list = mutableListOf<String>()
-                    var id by mutableStateOf("")
-                    result.forEach{ list.add(it.id) }
-                    list.let { id = it[0] }
                 }.onFailure {
                     isLoading = false
-                    val errorCode = it.cause
+                    val errorCode = it.message ?: EMPTY
+                    Log.e("error_search", errorCode)
                     return@onFailure
                 }
         }
@@ -59,7 +55,8 @@ class MainViewModel @Inject constructor(
                     categories = it
                 }.onFailure {
                     isLoading = false
-                    val errorCode = it.cause
+                    val errorCode = it.message ?: EMPTY
+                    Log.e("error_category", errorCode)
                     return@onFailure
                 }
         }
