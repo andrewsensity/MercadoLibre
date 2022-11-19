@@ -10,6 +10,7 @@ import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -52,18 +53,18 @@ fun DetailScreen(
     var itemCondition = ""
     val pages = detailViewModel.lengthList
     val confirmStateChange by remember { mutableStateOf(true) }
-    var quantity by remember { mutableStateOf(EMPTY) }
-    var cartNumber by remember { mutableStateOf(EMPTY) }
+    var quantity by rememberSaveable { mutableStateOf(EMPTY) }
+    var cartNumber by rememberSaveable { mutableStateOf(EMPTY) }
     val sheetState = rememberModalBottomSheet(confirmStateChange = { confirmStateChange })
     val scope = rememberCoroutineScope()
+    var typeModalBottomSheet: BottomSheetContent by remember {
+        mutableStateOf(BottomSheetContent.SelectQuantity)
+    }
     detail.pictures.forEach { picture ->
         pictures.add(picture.url)
     }
     detail.attributes.forEach {
         if (it.id == ITEM_CONDITION) itemCondition = it.value_name
-    }
-    var typeModalBottomSheet: BottomSheetContent by remember {
-        mutableStateOf(BottomSheetContent.SelectQuantity)
     }
     ModalBottomSheetLayout(
         sheetState = sheetState,
@@ -85,7 +86,7 @@ fun DetailScreen(
                     navController = navController,
                     contentDescriptionTopBar = EMPTY,
                 ) {
-                    HeaderDetails(quantity = cartNumber)
+                    HeaderDetails(quantit = cartNumber)
                 }
             },
             contentColor = Yellow,
@@ -112,7 +113,7 @@ fun DetailScreen(
                 AvailableStock(
                     context = context,
                     sheetState = sheetState,
-                    quantity = quantity,
+                    quantit = quantity,
                     cart = { cart -> cartNumber = cart },
                     availableQuantity = detail.initial_quantity
                 )
