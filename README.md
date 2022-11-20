@@ -22,6 +22,7 @@ Se logro maquetar un clon con algunas funciones básicas de la aplicación real 
 * Se inyecta dependencias con Dagger Hilt
 * Se trabajan el sistema de vistas con Jetpack Compose.
 * Se hace uso de Retrofit para obtener los datos desde las api.
+* Se realizan pruebas unitarias de los servicios.
 
 > El repositorio lo encuentras [aqui](https://github.com/andrewsensity/MercadoLibre).
 
