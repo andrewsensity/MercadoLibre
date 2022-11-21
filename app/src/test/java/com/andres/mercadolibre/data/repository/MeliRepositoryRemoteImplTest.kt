@@ -52,7 +52,9 @@ class MeliRepositoryRemoteImplTest {
                 .setBody(readJsonFile("response_get_by_search.json"))
         )
         val result = meliRepositoryRemoteImpl.getBySearch(
-            product = "carro"
+            product = "carro",
+            limit = 0,
+            offset = 50
         )
         assertThat(result.isSuccess).isTrue()
     }
@@ -65,7 +67,9 @@ class MeliRepositoryRemoteImplTest {
                 .setBody(readJsonFile("response_get_by_search.json"))
         )
         val result = meliRepositoryRemoteImpl.getBySearch(
-            product = "carro"
+            product = "carro",
+            limit = 0,
+            offset = 50
         )
         assertThat(result.isFailure).isTrue()
     }
@@ -77,7 +81,9 @@ class MeliRepositoryRemoteImplTest {
                 .setBody(malformedGetBySearch)
         )
         val result = meliRepositoryRemoteImpl.getBySearch(
-            product = "carro"
+            product = "carro",
+            limit = 0,
+            offset = 50
         )
         assertThat(result.isFailure).isTrue()
     }
