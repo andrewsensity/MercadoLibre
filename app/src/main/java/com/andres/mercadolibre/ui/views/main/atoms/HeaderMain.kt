@@ -87,7 +87,7 @@ fun HeaderMain(
                     IconButton(
                         onClick = {
                             if (search.isNotEmpty()) {
-                                mainViewModel.getBySearch(search)
+                                mainViewModel.getProduct(search)
                                 keyboardController.hide()
                                 clearFocus(false)
                                 showText(true)

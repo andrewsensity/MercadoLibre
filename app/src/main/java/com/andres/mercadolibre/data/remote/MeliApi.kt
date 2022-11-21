@@ -8,6 +8,8 @@ import com.andres.mercadolibre.util.Constants.CATEGORIES_END_POINT
 import com.andres.mercadolibre.util.Constants.DESCRIPTION_END_POINT
 import com.andres.mercadolibre.util.Constants.DETAILS_END_POINT
 import com.andres.mercadolibre.util.Constants.KEY_ID
+import com.andres.mercadolibre.util.Constants.LIMIT
+import com.andres.mercadolibre.util.Constants.OFFSET
 import com.andres.mercadolibre.util.Constants.PRODUCT
 import com.andres.mercadolibre.util.Constants.SEARCH_END_POINT
 import retrofit2.http.GET
@@ -29,6 +31,8 @@ interface MeliApi {
     @GET(SEARCH_END_POINT)
     suspend fun getBySearch(
         @Query(PRODUCT) product: String,
+        @Query(LIMIT) limit: Int,
+        @Query(OFFSET) offset: Int,
     ): SearchResponse
 
     @GET(CATEGORIES_END_POINT)

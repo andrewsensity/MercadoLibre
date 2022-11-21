@@ -17,6 +17,8 @@ object Constants {
     // Keys
     const val KEY_ID = "id"
     const val PRODUCT = "q"
+    const val LIMIT = "limit"
+    const val OFFSET = "offset"
     const val LOGISTIC_TYPE = "cross_docking"
     const val ITEM_CONDITION = "ITEM_CONDITION"
 

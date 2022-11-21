@@ -29,9 +29,9 @@ class MeliRepositoryRemoteImpl(
         }
     }
 
-    override suspend fun getBySearch(product: String): Result<SearchResponse> {
+    override suspend fun getBySearch(product: String, limit: Int, offset: Int): Result<SearchResponse> {
         return try {
-            val result = api.getBySearch(product)
+            val result = api.getBySearch(product, limit, offset)
             Result.success(result)
         } catch (exception: Exception) {
             Result.failure(exception)

@@ -28,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.andres.mercadolibre.R
 import com.andres.mercadolibre.ui.theme.Blue
 import com.andres.mercadolibre.ui.views.main.InputField
@@ -88,7 +89,7 @@ fun CustomTextField(
         keyboardActions = KeyboardActions(
             onSearch = {
                 if (search.isNotEmpty()) {
-                    mainViewModel.getBySearch(search)
+                    mainViewModel.getProduct(search)
                     keyboardController.hide()
                     showText(true)
                     clearFocus(false)

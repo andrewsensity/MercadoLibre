@@ -38,7 +38,7 @@ fun itemCategories(
             .clickable {
                 onClick(true)
                 product(category)
-                mainViewModel.getBySearch(category)
+                mainViewModel.getProduct(category)
                 keyboardController.hide()
                 clearFocus(false)
                 showText(true)

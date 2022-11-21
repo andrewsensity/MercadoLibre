@@ -11,7 +11,7 @@ interface MeliRepositoryRemote {
 
     suspend fun getDescription(id: String): Result<DescriptionResponse>
 
-    suspend fun getBySearch(product: String): Result<SearchResponse>
+    suspend fun getBySearch(product: String, limit: Int, offset: Int): Result<SearchResponse>
 
     suspend fun getCategories(): Result<CategoriesResponse>
 }
